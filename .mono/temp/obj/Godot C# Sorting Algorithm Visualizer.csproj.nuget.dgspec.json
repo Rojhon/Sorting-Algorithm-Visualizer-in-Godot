@@ -1,0 +1,47 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Asus\\Desktop\\Godot\\Godot Project C#\\Godot C# Sorting Algorithm Visualizer\\Godot C# Sorting Algorithm Visualizer.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Asus\\Desktop\\Godot\\Godot Project C#\\Godot C# Sorting Algorithm Visualizer\\Godot C# Sorting Algorithm Visualizer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Asus\\Desktop\\Godot\\Godot Project C#\\Godot C# Sorting Algorithm Visualizer\\Godot C# Sorting Algorithm Visualizer.csproj",
+        "projectName": "Godot C# Sorting Algorithm Visualizer",
+        "projectPath": "C:\\Users\\Asus\\Desktop\\Godot\\Godot Project C#\\Godot C# Sorting Algorithm Visualizer\\Godot C# Sorting Algorithm Visualizer.csproj",
+        "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Asus\\Desktop\\Godot\\Godot Project C#\\Godot C# Sorting Algorithm Visualizer\\.mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
