@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scene/Script/MainScene.cs" type="Script" id=1]
+[ext_resource path="res://Scene/ArrayValueParent.tscn" type="PackedScene" id=2]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -51,9 +52,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ArrayValueParent" type="Node" parent="."]
+[node name="ArrayValueParent" parent="." instance=ExtResource( 2 )]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [connection signal="value_changed" from="Control/ArraySizeSlider" to="." method="_on_ArraySizeSlider_value_changed"]
 [connection signal="item_selected" from="Control/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
 [connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
