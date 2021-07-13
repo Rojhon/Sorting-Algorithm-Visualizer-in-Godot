@@ -24,12 +24,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="OptionButton" type="OptionButton" parent="Control"]
+margin_left = 452.942
+margin_top = 93.8641
+margin_right = 481.942
+margin_bottom = 113.864
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="GenerateNewArray" type="Button" parent="Control"]
-margin_right = 12.0
-margin_bottom = 20.0
+margin_left = 633.382
+margin_top = 89.8121
+margin_right = 645.382
+margin_bottom = 109.812
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sort" type="Button" parent="Control"]
+margin_left = 673.67
+margin_top = 88.8662
+margin_right = 685.67
+margin_bottom = 108.866
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [connection signal="value_changed" from="Control/ArraySizeSlider" to="." method="_on_ArraySizeSlider_value_changed"]
+[connection signal="item_selected" from="Control/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
+[connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
