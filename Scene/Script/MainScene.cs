@@ -18,8 +18,18 @@ public class MainScene : Node2D
 
     public int index = 0; // Option button index
 
+
+    public Global global;
+    public PackedScene arrayValue;
+    public Node arrayValueParent;
+
     public override void _Ready()
     {
+
+        global = new Global();
+        arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn");
+        arrayValueParent = GetNode<Node>("ArrayValueParent");
+
         arrayValueGenerator = new ArrayValueGenerator();
         arraySizeSlider = this.GetNode<HSlider>("Control/ArraySizeSlider");
 
@@ -28,6 +38,9 @@ public class MainScene : Node2D
         to = (int)arraySizeSlider.MaxValue + 1;
 
         currentArrayValue = arrayValueGenerator.RandomArrayValue(arraySize, from, to); // Set the first array Integer value
+
+        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
+
         arrayValueGenerator.PrintArrayValue();  // For Debugging 
 
         optionButton = this.GetNode<OptionButton>("Control/OptionButton");
@@ -48,9 +61,13 @@ public class MainScene : Node2D
 
     // Generate a new Random Integer Value in Array when Pressed
     public void _on_GenerateNewArray_pressed(){
-        arraySize = (int)arraySizeSlider.Value;
+        DeleteInstanceNode();
 
+        arraySize = (int)arraySizeSlider.Value;
         currentArrayValue = arrayValueGenerator.RandomArrayValue(arraySize, from, to);
+
+        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
+
         arrayValueGenerator.PrintArrayValue();  // For Debugging  
     }
 
@@ -72,6 +89,22 @@ public class MainScene : Node2D
 
         currentArrayValue = arrayValueGenerator.RandomArrayValue(arraySize, from, to);
         arrayValueGenerator.PrintArrayValue();   // For Debugging 
+
+    }
+
+    public void InstanceNode(PackedScene node, Vector2 location, Node parent, int arraySize){
+        if(arrayValueParent.GetChildCount() == 0){
+            for(int i = 0; i < arraySize; i++){
+            global.InstanceNode(node, location, parent);
+        }
+        }
+        
+    }
+
+    public void DeleteInstanceNode(){
+        for(int i = 0; i < arrayValueParent.GetChildCount(); i++){
+            arrayValueParent.GetChild<Sprite>(i).QueueFree();
+        }
 
     }
 

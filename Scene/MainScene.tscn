@@ -51,6 +51,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ArrayValueParent" type="Node" parent="."]
+
 [connection signal="value_changed" from="Control/ArraySizeSlider" to="." method="_on_ArraySizeSlider_value_changed"]
 [connection signal="item_selected" from="Control/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]

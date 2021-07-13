@@ -3,7 +3,9 @@ using System;
 
 public class ArrayValueGenerator
 {
-    public int[] value;
+    public static int[] value;
+    Global global = new Global();
+
     // Return a Set of Random Integer Value in Array
     public int[] RandomArrayValue(int arraySize, int from, int to){
         value = new int[arraySize];
@@ -22,8 +24,18 @@ public class ArrayValueGenerator
 
     // For Debugging
     public void PrintArrayValue(){
-        GD.Print("Array: " + string.Join(",", value));
+        GD.Print("Array: " + string.Join(",", GetArrayValues()));
     }
+
+    public static int[] GetArrayValues(){
+        return value;
+    }
+
+    // public void DisplayArray(){
+    //     foreach(var arr in GetArrayValues()){
+    //         ArrayValue.selfValue = arr;
+    //     }
+    // }
 
     public int GetLength(){
         return value.Length;
