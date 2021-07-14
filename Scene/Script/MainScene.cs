@@ -9,7 +9,7 @@ public class MainScene : Node2D
 
     // Range of Random Number
     public int from = 5;
-    public int to = 11;
+    public int to = 101;
 
     // Option Button
     public OptionButton sortingAlgoOption;
@@ -116,13 +116,14 @@ public class MainScene : Node2D
     // Set Respawn Point
     public Vector2 RespawnPoint(){
         float xPosition = (int)GetViewport().Size.x / 1;
-        Vector2 location = new Vector2(0, 450);
+        Vector2 location = new Vector2(0, 520); // 482
 
+        // Fix position for 5 and 10 Array Length 
         if(ArrayValueGenerator.GetLength() == 5){
-            location.x = 340;
+            location.x = 308;
         }
         else if(ArrayValueGenerator.GetLength() == 10){
-            location.x = 165;
+            location.x = 133;
         }
         
         return location;

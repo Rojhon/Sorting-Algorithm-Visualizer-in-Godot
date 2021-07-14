@@ -3,11 +3,13 @@ using System;
 
 public class ArrayValue : Sprite
 {
-    public Node parent;
-    public int index;
-    public int selfValue;
-    public Label intValue;
-    
+    public Node parent; // Parent Node -- Array Value Parent
+    public int index; // Index for getting self ChildCount in Parent
+    public int selfValue; // Storing here the data of his Array Value
+    public Label intValue; // Label the data
+
+    public Sprite valueSprite; // Value Sprite Node
+
     public override void _Ready()
     {
         parent = GetParent<Node>();
@@ -20,11 +22,10 @@ public class ArrayValue : Sprite
         intValue = this.GetNode<Label>("IntValue");
         intValue.Text = selfValue.ToString();
 
-    }
+        // Value Sprite Node
+        valueSprite = GetNode<Sprite>("ValueSprite");
+        valueSprite.Scale = new Vector2(valueSprite.Scale.x, -selfValue * 4);
 
-    public override void _Process(float delta)
-    {
-        
     }
 
 }
