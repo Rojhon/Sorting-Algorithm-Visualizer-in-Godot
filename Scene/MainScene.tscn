@@ -13,23 +13,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ArraySizeSlider" type="HSlider" parent="Control"]
-margin_left = 62.9325
-margin_top = 101.116
-margin_right = 362.933
-margin_bottom = 117.116
-min_value = 5.0
-max_value = 10.0
-value = 5.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="OptionButton" type="OptionButton" parent="Control"]
+[node name="SortingALgoOption" type="OptionButton" parent="Control"]
 margin_left = 452.942
 margin_top = 93.8641
 margin_right = 481.942
 margin_bottom = 113.864
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ArraySizeOption" type="OptionButton" parent="Control"]
+margin_left = 452.11
+margin_top = 23.7196
+margin_right = 481.11
+margin_bottom = 43.7196
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -58,8 +55,8 @@ __meta__ = {
 wait_time = 0.1
 one_shot = true
 
-[connection signal="value_changed" from="Control/ArraySizeSlider" to="." method="_on_ArraySizeSlider_value_changed"]
-[connection signal="item_selected" from="Control/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="item_selected" from="Control/SortingALgoOption" to="." method="_on_SortingALgoOption_item_selected"]
+[connection signal="item_selected" from="Control/ArraySizeOption" to="." method="_on_ArraySizeOption_item_selected"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
 [connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -3,85 +3,102 @@ using System;
 
 public class MainScene : Node2D
 {
-    public HSlider arraySizeSlider; // Instance of HSlider Node
-    public int arraySize; // Storing here the current value of arraySizeSlider
+    public int arraySize = 5; // Storing here the current value of arraySizeSlider
 
     public int[] currentArrayValue; // Storing here the current array integer value
 
     // Range of Random Number
-    public int from;
-    public int to;
+    public int from = 5;
+    public int to = 11;
 
     // Option Button
-    public OptionButton optionButton;
+    public OptionButton sortingAlgoOption;
+    public OptionButton arraySizeOption;
 
     public int index = 0; // Option button index
 
-    public PackedScene arrayValue;
-    public Node arrayValueParent;
+    public PackedScene arrayValue; // PackedScene of ArrayValue Node
+    public Node arrayValueParent; // Storing here the ArrayValue Node
 
-    public Timer timer;
+    public Timer timer; // The timer 
 
     public override void _Ready()
     {
-        arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn");
-        arrayValueParent = this.GetNode<Node>("ArrayValueParent");
+        arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); // Instance the Array Value Scene
+        arrayValueParent = this.GetNode<Node>("ArrayValueParent"); // Get the node ArrayValueParent in the scene
 
-        arraySizeSlider = this.GetNode<HSlider>("Control/ArraySizeSlider");
-        timer = GetNode<Timer>("Timer");
+        // Adding item choices of Sorting Algorithm option button
+        sortingAlgoOption = this.GetNode<OptionButton>("Control/SortingALgoOption");
+        AddItem(); 
 
-        arraySize = (int)arraySizeSlider.Value;
-        from = (int)arraySizeSlider.MinValue;
-        to = (int)arraySizeSlider.MaxValue + 1;
+        // Adding item choices of Array Size Option and Set the array size
+        arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
+        AddSize();
 
-        currentArrayValue = ArrayValueGenerator.RandomArrayValue(arraySize, from, to); // Set the first array Integer value
+        timer = GetNode<Timer>("Timer"); // Get the node Timer in the scene
 
-        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
+        SetArrayValue();// Set the first array value
 
-        ArrayValueGenerator.PrintArrayValue();  // For Debugging 
-
-        optionButton = this.GetNode<OptionButton>("Control/OptionButton");
-        AddItem(); // Adding the item of option button
-        
     }
 
-    // Add the item of option button
+    // Adding item choices in Sorting Algorithm option button
     public void AddItem(){
-        optionButton.AddItem("Bubble Sort");
-        optionButton.AddItem("Merge Sort");
+        sortingAlgoOption.AddItem("Bubble Sort");
+        sortingAlgoOption.AddItem("Merge Sort");
 
     }
 
     // Set the index of active Sort Algorithm in option button when selected
-    public void _on_OptionButton_item_selected(int index){
+    public void _on_SortingALgoOption_item_selected(int index){
         this.index = index;
         
     }
 
-    // Generate a new Random Integer Value in Array when Pressed
+    // Adding item choices button in Array Size Option
+    public void AddSize(){
+        arraySizeOption.AddItem("5");
+        arraySizeOption.AddItem("10");
+        arraySizeOption.AddItem("25");
+        arraySizeOption.AddItem("50");
+        arraySizeOption.AddItem("75");
+        arraySizeOption.AddItem("100");
+
+    }
+
+    // Display the new Array Value and Deleting the old Array Value
+    public void _on_ArraySizeOption_item_selected(int index){
+        DeleteInstanceNode();
+        timer.Start();
+    }
+
+    // Set the array size
+    public void SetSize(){
+        arraySize = arraySizeOption.Text.ToString().ToInt();
+    }
+
+    
+    // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
     public void _on_GenerateNewArray_pressed(){
         DeleteInstanceNode();
         timer.Start();
+    }
 
+    // This timer is for Instancing the Node Array Value
+    public void _on_Timer_timeout(){
+        SetSize();
+        SetArrayValue();
     }
 
     // Sort the current array value when pressed
     public void _on_Sort_pressed(){
-        if(optionButton.GetItemText(index) == "Bubble Sort"){
+        if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
             SortingAlgorithm.BubbleSort(currentArrayValue);
             ArrayValueGenerator.PrintArrayValue();
         }
 
-        if(optionButton.GetItemText(index) == "Merge Sort"){
+        if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){
             GD.Print("Merge Sort");
         }
-    }
-
-    // Set Array size through slider
-    public void _on_ArraySizeSlider_value_changed(int value){
-        DeleteInstanceNode();
-        timer.Start();
-
     }
 
     // Instance the Node in the Scene
@@ -95,22 +112,23 @@ public class MainScene : Node2D
         
     }
 
+
+    // Set and Display the array values in the scene
+    public void SetArrayValue(){
+        currentArrayValue = ArrayValueGenerator.RandomArrayValue(arraySize, from, to);
+
+        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
+
+        ArrayValueGenerator.PrintArrayValue(); // For Debugging  
+        GD.Print("Array Size: " + ArrayValueGenerator.GetLength());
+
+    }
+
     // Deleting Old Array Value Instance Node
     public void DeleteInstanceNode(){
         for(int i = 0; i < arrayValueParent.GetChildCount(); i++){
             arrayValueParent.GetChild<Sprite>(i).QueueFree();
         }
-
-    }
-
-    // This timer is for Instancing the Node Array Value
-    public void _on_Timer_timeout(){
-        arraySize = (int)arraySizeSlider.Value;
-        currentArrayValue = ArrayValueGenerator.RandomArrayValue(arraySize, from, to);
-
-        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
-
-        // ArrayValueGenerator.PrintArrayValue(); // For Debugging  
 
     }
 

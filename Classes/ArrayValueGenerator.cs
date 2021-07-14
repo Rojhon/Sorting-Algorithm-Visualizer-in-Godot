@@ -30,7 +30,7 @@ public class ArrayValueGenerator
         return value;
     }
 
-    public int GetLength(){
+    public static int GetLength(){
         return value.Length;
     }
 
