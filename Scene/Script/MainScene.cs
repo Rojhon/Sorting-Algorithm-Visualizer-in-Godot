@@ -76,7 +76,6 @@ public class MainScene : Node2D
         arraySize = arraySizeOption.Text.ToString().ToInt();
     }
 
-    
     // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
     public void _on_GenerateNewArray_pressed(){
         DeleteInstanceNode();
@@ -93,7 +92,8 @@ public class MainScene : Node2D
     public void _on_Sort_pressed(){
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
             SortingAlgorithm.BubbleSort(currentArrayValue);
-            ArrayValueGenerator.PrintArrayValue();
+            
+            ArrayValueGenerator.PrintArrayValue(); // For Debugging
         }
 
         if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){
@@ -102,22 +102,37 @@ public class MainScene : Node2D
     }
 
     // Instance the Node in the Scene
-    public void InstanceNode(PackedScene node, Vector2 location, Node parent, int size){
+    public void InstanceNode(PackedScene node, Vector2 location, Node parent, int size, int gap){
         if(arrayValueParent.GetChildCount() == 0){
             for(int i = 0; i < size; i++){
                 Global.InstanceNode(node, location, parent);
+                location.x += gap;
 
             }
         }
         
     }
 
+    // Set Respawn Point
+    public Vector2 RespawnPoint(){
+        float xPosition = (int)GetViewport().Size.x / 1;
+        Vector2 location = new Vector2(0, 450);
+
+        if(ArrayValueGenerator.GetLength() == 5){
+            location.x = 340;
+        }
+        else if(ArrayValueGenerator.GetLength() == 10){
+            location.x = 165;
+        }
+        
+        return location;
+    }
 
     // Set and Display the array values in the scene
     public void SetArrayValue(){
         currentArrayValue = ArrayValueGenerator.RandomArrayValue(arraySize, from, to);
 
-        InstanceNode(arrayValue, new Vector2(100, 400), arrayValueParent, arraySize);
+        InstanceNode(arrayValue, RespawnPoint(), arrayValueParent, arraySize, 70);
 
         ArrayValueGenerator.PrintArrayValue(); // For Debugging  
         GD.Print("Array Size: " + ArrayValueGenerator.GetLength());
