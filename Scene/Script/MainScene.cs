@@ -22,6 +22,11 @@ public class MainScene : Node2D
 
     public Timer timer; // The timer 
 
+    // Color
+    public Color sortedColor = new Color(0, 1, 0, 1);
+
+    public Timer bubbleSortTimer;
+
     public override void _Ready()
     {
         arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); // Instance the Array Value Scene
@@ -39,7 +44,10 @@ public class MainScene : Node2D
 
         SetArrayValue();// Set the first array value
 
+        bubbleSortTimer = GetNode<Timer>("SortingSpeed/BubbleSortTimer");
+
     }
+
 
     // Adding item choices in Sorting Algorithm option button
     public void AddItem(){
@@ -91,7 +99,7 @@ public class MainScene : Node2D
     // Sort the current array value when pressed
     public void _on_Sort_pressed(){
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
-            SortingAlgorithm.BubbleSort(currentArrayValue);
+            BubbleSort(currentArrayValue);
             
             ArrayValueGenerator.PrintArrayValue(); // For Debugging
         }
@@ -176,6 +184,49 @@ public class MainScene : Node2D
             arrayValueParent.GetChild<Sprite>(i).QueueFree();
         }
 
+    }
+
+    // Sorting Algorithm
+    public void BubbleSort(int []arr){
+        int f = 0;
+
+        int n = arr.Length;
+        for (int i = 0; i < n - 1; i++){
+            for (int j = 0; j < n - i - 1; j++){
+                // GD.Print(arr[j] + " Comparing " + arr[j + 1]);
+                if (arr[j] > arr[j + 1]){
+                    // swap temp and arr[i]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+
+                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
+
+                    // GD.Print(temp + " Swapping " + arr[j]);
+                }
+
+                if(j == n - i - 2){
+                    // bubbleSortTimer.Start();
+                    // GD.Print("Success Sorted: " + arr[j + 1]);
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = sortedColor;
+                    f++;
+
+                    if(f == arraySize - 1){
+                        // GD.Print("Success Sorted: " + arr[j]);
+                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+
+                    }
+
+                }
+            }
+
+        }
+            
+    }
+
+    public void _on_BubbleSortTimer_timeout(){
+        GD.Print("Timer");
     }
 
 }
