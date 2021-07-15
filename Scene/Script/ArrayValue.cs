@@ -22,9 +22,30 @@ public class ArrayValue : Sprite
         intValue = this.GetNode<Label>("IntValue");
         intValue.Text = selfValue.ToString();
 
-        // Value Sprite Node
+        // Value Sprite Node - Scale
+
         valueSprite = GetNode<Sprite>("ValueSprite");
-        valueSprite.Scale = new Vector2(valueSprite.Scale.x, -selfValue * 4);
+
+        if(ArrayValueGenerator.GetLength() == 5 || ArrayValueGenerator.GetLength() == 10){
+            valueSprite.Scale = new Vector2(valueSprite.Scale.x, -selfValue * 4);
+
+        }else if(ArrayValueGenerator.GetLength() == 25){
+            valueSprite.Scale = new Vector2(30, -selfValue * 4);
+
+        }
+        else if(ArrayValueGenerator.GetLength() == 50){
+            valueSprite.Scale = new Vector2(15, -selfValue * 4);
+
+        }
+        else if(ArrayValueGenerator.GetLength() == 75){
+            valueSprite.Scale = new Vector2(10, -selfValue * 4);
+
+        }
+        else if(ArrayValueGenerator.GetLength() == 100){
+            valueSprite.Scale = new Vector2(5, -selfValue * 4);
+
+        }
+
 
     }
 

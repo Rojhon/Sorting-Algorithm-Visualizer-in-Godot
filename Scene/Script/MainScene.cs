@@ -113,29 +113,59 @@ public class MainScene : Node2D
         
     }
 
-    // Set Respawn Point
+    // Set Respawn Point - This is Fix position 
     public Vector2 RespawnPoint(){
-        float xPosition = (int)GetViewport().Size.x / 1;
         Vector2 location = new Vector2(0, 520); // 482
 
-        // Fix position for 5 and 10 Array Length 
         if(ArrayValueGenerator.GetLength() == 5){
             location.x = 308;
         }
         else if(ArrayValueGenerator.GetLength() == 10){
             location.x = 133;
         }
+        else if(ArrayValueGenerator.GetLength() == 25){
+            location.x = 43;
+        }
+        else{
+            location.x = 33;
+
+        }
+        
         
         return location;
+    }
+
+    // Gap for displaying Array Value
+    public int Gap(int arraySize){
+        int gap = 0;
+        if(arraySize == 5 || arraySize == 10){
+            gap = 70;
+
+        }
+        else if(arraySize == 25){
+            gap = 35;
+        }
+
+        else if(arraySize == 50){
+            gap = 18;
+        }
+        else if(arraySize == 75){
+            gap = 12;
+        }
+        else if(arraySize == 100){
+            gap = 9;
+        }
+        return gap;
     }
 
     // Set and Display the array values in the scene
     public void SetArrayValue(){
         currentArrayValue = ArrayValueGenerator.RandomArrayValue(arraySize, from, to);
 
-        InstanceNode(arrayValue, RespawnPoint(), arrayValueParent, arraySize, 70);
+        InstanceNode(arrayValue, RespawnPoint(), arrayValueParent, arraySize, Gap(arraySize));
 
-        ArrayValueGenerator.PrintArrayValue(); // For Debugging  
+        // For Debugging  
+        ArrayValueGenerator.PrintArrayValue(); 
         GD.Print("Array Size: " + ArrayValueGenerator.GetLength());
 
     }
