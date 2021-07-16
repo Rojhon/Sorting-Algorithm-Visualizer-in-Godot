@@ -15,6 +15,7 @@ public class MainScene : Node2D
     // Option Button
     public OptionButton sortingAlgoOption;
     public OptionButton arraySizeOption;
+    public OptionButton sortingSpeedOption;
 
     public int index = 0; // Option button index
 
@@ -30,7 +31,7 @@ public class MainScene : Node2D
     public Color swappingColor = new Color( 1, 0, 0, 1 );
 
     // Sorting Speed
-    public int sortingSpeed = 4;
+    public int sortingSpeed = 1;
 
     public override void _Ready()
     {
@@ -44,6 +45,9 @@ public class MainScene : Node2D
         // Adding item choices of Array Size Option and Set the array size
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
         AddSize();
+
+        sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
+        AddSortingSpeed();
 
         timer = GetNode<Timer>("Timer"); // Get the node Timer in the scene
 
@@ -79,6 +83,25 @@ public class MainScene : Node2D
     public void _on_ArraySizeOption_item_selected(int index){
         DeleteInstanceNode();
         timer.Start();
+    }
+
+    // Adding item choices button in Sorting Speed Option
+    public void AddSortingSpeed(){
+        sortingSpeedOption.AddItem("0.001");
+        sortingSpeedOption.AddItem("0.01");
+        sortingSpeedOption.AddItem("0.1");
+        sortingSpeedOption.AddItem("1");
+        sortingSpeedOption.AddItem("3");
+        sortingSpeedOption.AddItem("5");
+        
+    }
+
+    // Set sorting Speed
+    public void _on_SortingSpeedOption_item_selected(int index){
+        float sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
+        sortingSpeed = (int)sortingSpeedChoices;
+        GD.Print("Sorting Speed: " + sortingSpeed);
+
     }
 
     // Set the array size
