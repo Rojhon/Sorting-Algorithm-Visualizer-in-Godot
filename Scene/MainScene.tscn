@@ -77,4 +77,3 @@ one_shot = true
 [connection signal="item_selected" from="Control/ArraySizeOption" to="." method="_on_ArraySizeOption_item_selected"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
 [connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
-[connection signal="timeout" from="SortingSpeed/BubbleSortTimer" to="." method="_on_BubbleSortTimer_timeout"]

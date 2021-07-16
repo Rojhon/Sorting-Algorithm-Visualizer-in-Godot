@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public class MainScene : Node2D
 {
@@ -23,9 +24,13 @@ public class MainScene : Node2D
     public Timer timer; // The timer 
 
     // Color
+    public Color defaulColor = new Color( 1, 1, 1, 1 );
     public Color sortedColor = new Color(0, 1, 0, 1);
+    public Color comparingColor = new Color( 0, 0, 1, 1 ) ;
+    public Color swappingColor = new Color( 1, 0, 0, 1 );
 
-    public Timer bubbleSortTimer;
+    // Sorting Speed
+    public int sortingSpeed = 4;
 
     public override void _Ready()
     {
@@ -44,10 +49,7 @@ public class MainScene : Node2D
 
         SetArrayValue();// Set the first array value
 
-        bubbleSortTimer = GetNode<Timer>("SortingSpeed/BubbleSortTimer");
-
     }
-
 
     // Adding item choices in Sorting Algorithm option button
     public void AddItem(){
@@ -123,7 +125,7 @@ public class MainScene : Node2D
 
     // Set Respawn Point - This is Fix position 
     public Vector2 RespawnPoint(){
-        Vector2 location = new Vector2(0, 520); // 482
+        Vector2 location = new Vector2(0, 520);
 
         if(ArrayValueGenerator.GetLength() == 5){
             location.x = 308;
@@ -187,46 +189,59 @@ public class MainScene : Node2D
     }
 
     // Sorting Algorithm
-    public void BubbleSort(int []arr){
-        int f = 0;
+    public async Task BubbleSort(int []arr){
+        await Task.Run(()=>{
+            int f = 0;
 
-        int n = arr.Length;
-        for (int i = 0; i < n - 1; i++){
-            for (int j = 0; j < n - i - 1; j++){
-                // GD.Print(arr[j] + " Comparing " + arr[j + 1]);
-                if (arr[j] > arr[j + 1]){
-                    // swap temp and arr[i]
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
+            int n = arr.Length;
+            for (int i = 0; i < n - 1; i++){
+                for (int j = 0; j < n - i - 1; j++){
 
-                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
-                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
+                    // Comparing Color
+                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = comparingColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = comparingColor;
 
-                    // GD.Print(temp + " Swapping " + arr[j]);
-                }
+                    // GD.Print(arr[j] + " Comparing " + arr[j + 1]);
+                    Task.Delay(sortingSpeed).Wait();
 
-                if(j == n - i - 2){
-                    // bubbleSortTimer.Start();
-                    // GD.Print("Success Sorted: " + arr[j + 1]);
-                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = sortedColor;
-                    f++;
+                    if (arr[j] > arr[j + 1]){
+                        int temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
 
-                    if(f == arraySize - 1){
-                        // GD.Print("Success Sorted: " + arr[j]);
-                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+                        // Swapping Color
+                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = swappingColor;
+                        arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = swappingColor;
 
+                        Task.Delay(sortingSpeed).Wait();
+
+                        // Set Scale
+                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
+                        arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
+
+                        // GD.Print(temp + " Swapping " + arr[j]);
                     }
 
+                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = defaulColor;
+
+                    if(j == n - i - 2){
+                        // GD.Print("Success Sorted: " + arr[j + 1]);
+                        arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = sortedColor;
+                        f++;
+
+                        if(f == arraySize - 1){
+                            // GD.Print("Success Sorted: " + arr[j]);
+                            arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+
+                        }
+
+                    }
                 }
+
             }
-
         }
+        );
             
-    }
-
-    public void _on_BubbleSortTimer_timeout(){
-        GD.Print("Timer");
     }
 
 }
