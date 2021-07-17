@@ -60,6 +60,7 @@ public class SortingAlgorithm
 
                             ArrayValueGenerator.PrintArrayValue(); // For Debugging
 
+                            MainScene.ProcessingSorting("Sorted", true);
                         }
 
                     }

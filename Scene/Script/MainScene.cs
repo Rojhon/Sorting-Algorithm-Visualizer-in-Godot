@@ -17,6 +17,9 @@ public class MainScene : Node2D
     public OptionButton arraySizeOption;
     public OptionButton sortingSpeedOption;
 
+    // Button
+    public static Button sortButton;
+
     public int index = 0; // Option button index
 
     public PackedScene arrayValue; // PackedScene of ArrayValue Node
@@ -49,6 +52,8 @@ public class MainScene : Node2D
         // Adding item choices of Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
         AddSortingSpeed();
+
+        sortButton = GetNode<Button>("Control/Sort");
 
         timer = GetNode<Timer>("Timer"); // Get the node Timer in the scene
 
@@ -112,8 +117,15 @@ public class MainScene : Node2D
 
     // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
     public void _on_GenerateNewArray_pressed(){
+        ProcessingSorting("Sort", false);
         DeleteInstanceNode();
         timer.Start();
+    }
+
+    // Run when Array Sorting is Processing
+    public static void ProcessingSorting(string text, bool disabled){
+        sortButton.Text = text;
+        sortButton.Disabled = disabled;
     }
 
     // This timer is for Instancing the Node Array Value
@@ -124,14 +136,17 @@ public class MainScene : Node2D
 
     // Sort the current array value when pressed
     public void _on_Sort_pressed(){
+        ProcessingSorting("Sorting", true);
+
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
             SortingAlgorithm.BubbleSort(currentArrayValue, arraySize, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
-            
+
         }
 
-        if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){
+        else if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){
             GD.Print("Merge Sort");
         }
+
     }
 
     // Instance the Node in the Scene
