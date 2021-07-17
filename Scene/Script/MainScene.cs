@@ -87,6 +87,7 @@ public class MainScene : Node2D
 
     // Display the new Array Value and Deleting the old Array Value
     public void _on_ArraySizeOption_item_selected(int index){
+        ProcessingSorting("Sort", false);
         DeleteInstanceNode();
         timer.Start();
     }
