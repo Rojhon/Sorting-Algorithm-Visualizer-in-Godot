@@ -46,6 +46,7 @@ public class MainScene : Node2D
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
         AddSize();
 
+        // Adding item choices of Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
         AddSortingSpeed();
 
@@ -124,9 +125,8 @@ public class MainScene : Node2D
     // Sort the current array value when pressed
     public void _on_Sort_pressed(){
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
-            SortingAlgorithm.BubbleSort(currentArrayValue, arraySize, sortingSpeed, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
+            SortingAlgorithm.BubbleSort(currentArrayValue, arraySize, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
             
-            ArrayValueGenerator.PrintArrayValue(); // For Debugging
         }
 
         if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){

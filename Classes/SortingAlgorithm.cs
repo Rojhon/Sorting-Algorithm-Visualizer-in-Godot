@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 public class SortingAlgorithm
 {
-
-    public static async Task BubbleSort(int []arr, int arraySize, int sortingSpeed, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
+    public static async Task BubbleSort(int []arr, int arraySize, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
         await Task.Run(()=>{
-            int f = 0;
+            int f = 0; // If finish or Sorted
 
-            int n = arr.Length;
+            int n = arr.Length; // Array Length
+
             for (int i = 0; i < n - 1; i++){
                 for (int j = 0; j < n - i - 1; j++){
 
@@ -18,7 +18,7 @@ public class SortingAlgorithm
                     arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = comparingColor;
 
                     // GD.Print(arr[j] + " Comparing " + arr[j + 1]);
-                    Task.Delay(sortingSpeed).Wait();
+                    Task.Delay(MainScene.sortingSpeed).Wait();
 
                     if (arr[j] > arr[j + 1]){
                         int temp = arr[j];
@@ -29,23 +29,25 @@ public class SortingAlgorithm
                         arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = swappingColor;
                         arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = swappingColor;
 
-                        Task.Delay(sortingSpeed).Wait();
+                        Task.Delay(MainScene.sortingSpeed).Wait();
 
+                        // Swap Global Position
                         Vector2 tempGlobalPosition = arrayValueParent.GetChild<Sprite>(j).GlobalPosition;
                         arrayValueParent.GetChild<Sprite>(j).GlobalPosition = arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition;
                         arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition = tempGlobalPosition;
-
+                        
+                        // Change the Index Position in Parent
                         arrayValueParent.MoveChild(arrayValueParent.GetChild(j + 1), j);
-
-
-                        // Set Scale
-                        // arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
-                        // arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
 
                         // GD.Print(temp + " Swapping " + arr[j]);
                     }
 
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+
                     arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = defaulColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = defaulColor;
+
+                    // Task.Delay(MainScene.sortingSpeed).Wait();
 
                     if(j == n - i - 2){
                         // GD.Print("Success Sorted: " + arr[j + 1]);
@@ -55,6 +57,8 @@ public class SortingAlgorithm
                         if(f == arraySize - 1){
                             // GD.Print("Success Sorted: " + arr[j]);
                             arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+
+                            ArrayValueGenerator.PrintArrayValue(); // For Debugging
 
                         }
 

@@ -22,8 +22,10 @@ public class ArrayValue : Sprite
         intValue = this.GetNode<Label>("IntValue");
         intValue.Text = selfValue.ToString();
 
-        // Value Sprite Node - Scale
+        // Set This Name
+        this.Name = selfValue.ToString(); 
 
+        // Value Sprite Node - Set the Scale
         valueSprite = GetNode<Sprite>("ValueSprite");
 
         if(ArrayValueGenerator.GetLength() == 5 || ArrayValueGenerator.GetLength() == 10){
@@ -46,6 +48,7 @@ public class ArrayValue : Sprite
 
         }
 
+        // Show Hide the Label
         if(ArrayValueGenerator.GetLength() <= 10){
             intValue.Show();
         }
