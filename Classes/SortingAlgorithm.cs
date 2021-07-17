@@ -31,9 +31,16 @@ public class SortingAlgorithm
 
                         Task.Delay(sortingSpeed).Wait();
 
+                        Vector2 tempGlobalPosition = arrayValueParent.GetChild<Sprite>(j).GlobalPosition;
+                        arrayValueParent.GetChild<Sprite>(j).GlobalPosition = arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition;
+                        arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition = tempGlobalPosition;
+
+                        arrayValueParent.MoveChild(arrayValueParent.GetChild(j + 1), j);
+
+
                         // Set Scale
-                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
-                        arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
+                        // arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -arr[j] * 4);
+                        // arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Scale= new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Scale.x, -temp * 4);
 
                         // GD.Print(temp + " Swapping " + arr[j]);
                     }

@@ -31,7 +31,7 @@ public class MainScene : Node2D
     public Color swappingColor = new Color( 1, 0, 0, 1 );
 
     // Sorting Speed
-    public int sortingSpeed = 1;
+    public static int sortingSpeed = 1;
 
     public override void _Ready()
     {

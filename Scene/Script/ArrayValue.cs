@@ -46,6 +46,13 @@ public class ArrayValue : Sprite
 
         }
 
+        if(ArrayValueGenerator.GetLength() <= 10){
+            intValue.Show();
+        }
+        else{
+            intValue.Hide();
+        }
+
 
     }
 

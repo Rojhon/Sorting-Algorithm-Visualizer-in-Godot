@@ -12,11 +12,10 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="IntValue" type="Label" parent="."]
-visible = false
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 30.0
+margin_left = 28.0
 margin_top = -40.0
-margin_right = 70.0
+margin_right = 68.0
 margin_bottom = -26.0
 text = "1"
 __meta__ = {
