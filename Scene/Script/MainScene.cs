@@ -1,31 +1,34 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
 
 public class MainScene : Node2D
 {
-    public int arraySize = 5; // Storing here the current value of arraySizeSlider
+    // Choices for types of sortingAlgoOption and it's index in the Option button
+    public static OptionButton sortingAlgoOption;
+    public int index = 0;
 
-    public int[] currentArrayValue; // Storing here the current array integer value
+    // Choices for arraySize of arraySizeOption, and Storage of current array that generated
+    public OptionButton arraySizeOption;
+    public int arraySize;
+    public int[] currentArrayValue;
 
-    // Range of Random Number
+    // Range of Random Number to be generated in Array
     public int from = 5;
     public int to = 101;
 
-    // Option Button
-    public OptionButton sortingAlgoOption;
-    public OptionButton arraySizeOption;
+    // Sorting Speed Option ans it's speed value in Millisecond
     public OptionButton sortingSpeedOption;
+    public static int sortingSpeed = 1;
 
-    // Button
+    // Sort Button
     public static Button sortButton;
 
-    public int index = 0; // Option button index
-
+    // Variables for Respawn Object
     public PackedScene arrayValue; // PackedScene of ArrayValue Node
     public Node arrayValueParent; // Storing here the ArrayValue Node
 
-    public Timer timer; // The timer 
+    // The timer for sorting
+    public Timer timer; 
 
     // Color
     public Color defaulColor = new Color( 1, 1, 1, 1 );
@@ -33,14 +36,7 @@ public class MainScene : Node2D
     public Color comparingColor = new Color( 0, 0, 1, 1 ) ;
     public Color swappingColor = new Color( 1, 0, 0, 1 );
 
-    // Sorting Speed
-    public static int sortingSpeed = 1;
-
-    public override void _Ready()
-    {
-        arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); // Instance the Array Value Scene
-        arrayValueParent = this.GetNode<Node>("ArrayValueParent"); // Get the node ArrayValueParent in the scene
-
+    public override void _Ready(){
         // Adding item choices of Sorting Algorithm option button
         sortingAlgoOption = this.GetNode<OptionButton>("Control/SortingALgoOption");
         AddItem(); 
@@ -48,33 +44,41 @@ public class MainScene : Node2D
         // Adding item choices of Array Size Option and Set the array size
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
         AddSize();
+        arraySize = arraySizeOption.GetItemText(arraySizeOption.Selected).ToInt();
+        
 
-        // Adding item choices of Sorting Speed Option
+        // Adding item choices in Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
         AddSortingSpeed();
+        GD.Print("Sorting Speed: " + sortingSpeed);
 
+        // Instance the Array Value Scene and Get the node ArrayValueParent in the scene
+        arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); 
+        arrayValueParent = this.GetNode<Node>("ArrayValueParent"); 
+
+        // Sort button
         sortButton = GetNode<Button>("Control/Sort");
 
-        timer = GetNode<Timer>("Timer"); // Get the node Timer in the scene
+        // Get the node Timer in the scene
+        timer = GetNode<Timer>("Timer"); 
 
-        SetArrayValue();// Set the first array value
-
+        // Set the first array values
+        SetArrayValue();
     }
 
-    // Adding item choices in Sorting Algorithm option button
+    // Adding Choices "Type of Sorting Algorithm" in sortinAlgoOption button and Set the index of current sortAlgoOption in option button when selected
     public void AddItem(){
         sortingAlgoOption.AddItem("Bubble Sort");
         sortingAlgoOption.AddItem("Merge Sort");
 
     }
 
-    // Set the index of active Sort Algorithm in option button when selected
     public void _on_SortingALgoOption_item_selected(int index){
         this.index = index;
         
     }
 
-    // Adding item choices button in Array Size Option
+    // Adding Choices "Array size" in arraySizeOption button, Set the array size, Display the new Array Value, and Deleting the old Array Value
     public void AddSize(){
         arraySizeOption.AddItem("5");
         arraySizeOption.AddItem("10");
@@ -85,14 +89,17 @@ public class MainScene : Node2D
 
     }
 
-    // Display the new Array Value and Deleting the old Array Value
+    public void SetSize(){
+        arraySize = arraySizeOption.Text.ToString().ToInt();
+    }
+
     public void _on_ArraySizeOption_item_selected(int index){
         ProcessingSorting("Sort", false);
         DeleteInstanceNode();
         timer.Start();
     }
 
-    // Adding item choices button in Sorting Speed Option
+    // Adding Choices "Sorting Speed" in sortingSpeedOption, and Set the Sorting Speed
     public void AddSortingSpeed(){
         sortingSpeedOption.AddItem("0.001");
         sortingSpeedOption.AddItem("0.01");
@@ -103,17 +110,11 @@ public class MainScene : Node2D
         
     }
 
-    // Set sorting Speed
     public void _on_SortingSpeedOption_item_selected(int index){
         float sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
         GD.Print("Sorting Speed: " + sortingSpeed);
 
-    }
-
-    // Set the array size
-    public void SetSize(){
-        arraySize = arraySizeOption.Text.ToString().ToInt();
     }
 
     // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
@@ -123,21 +124,9 @@ public class MainScene : Node2D
         timer.Start();
     }
 
-    // Run when Array Sorting is Processing
-    public static void ProcessingSorting(string text, bool disabled){
-        sortButton.Text = text;
-        sortButton.Disabled = disabled;
-    }
-
-    // This timer is for Instancing the Node Array Value
-    public void _on_Timer_timeout(){
-        SetSize();
-        SetArrayValue();
-    }
-
-    // Sort the current array value when pressed
+    // Sort the current stored array value when pressed
     public void _on_Sort_pressed(){
-        ProcessingSorting("Sorting", true);
+        ProcessingSorting("Sorting...", true);
 
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
             SortingAlgorithm.BubbleSort(currentArrayValue, arraySize, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
@@ -150,16 +139,17 @@ public class MainScene : Node2D
 
     }
 
-    // Instance the Node in the Scene
-    public void InstanceNode(PackedScene node, Vector2 location, Node parent, int size, int gap){
-        if(arrayValueParent.GetChildCount() == 0){
-            for(int i = 0; i < size; i++){
-                Global.InstanceNode(node, location, parent);
-                location.x += gap;
+    // This timer is for Instancing the Node Array Value
+    public void _on_Timer_timeout(){
+        SetSize();
+        SetArrayValue();
+    }
 
-            }
-        }
-        
+    // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
+    public static void ProcessingSorting(string text, bool disabled){
+        sortButton.Text = text;
+        sortButton.Disabled = disabled;
+        sortingAlgoOption.Disabled = disabled;
     }
 
     // Set Respawn Point - This is Fix position 
@@ -205,6 +195,18 @@ public class MainScene : Node2D
             gap = 9;
         }
         return gap;
+    }
+
+    // Instance the Node in the Scene
+    public void InstanceNode(PackedScene node, Vector2 location, Node parent, int size, int gap){
+        if(arrayValueParent.GetChildCount() == 0){
+            for(int i = 0; i < size; i++){
+                Global.InstanceNode(node, location, parent);
+                location.x += gap;
+
+            }
+        }
+        
     }
 
     // Set and Display the array values in the scene

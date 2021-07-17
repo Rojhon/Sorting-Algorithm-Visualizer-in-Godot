@@ -13,10 +13,10 @@ centered = false
 
 [node name="IntValue" type="Label" parent="."]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 28.0
-margin_top = -40.0
-margin_right = 68.0
-margin_bottom = -26.0
+margin_left = 27.0
+margin_top = -38.0
+margin_right = 35.0
+margin_bottom = -24.0
 text = "1"
 __meta__ = {
 "_edit_use_anchors_": false

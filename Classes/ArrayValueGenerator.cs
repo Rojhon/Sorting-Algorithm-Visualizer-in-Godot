@@ -26,10 +26,17 @@ public class ArrayValueGenerator
         GD.Print("Array: " + string.Join(",", GetArrayValues()));
     }
 
+    // Display when sorted
+    public static void PrintArrayValueSorted(string algoName){
+        GD.Print(algoName + ": " + string.Join(",", GetArrayValues()));
+    }
+
+    // Return Array Values
     public static int[] GetArrayValues(){
         return value;
     }
 
+    // Return the Length of array
     public static int GetLength(){
         return value.Length;
     }
