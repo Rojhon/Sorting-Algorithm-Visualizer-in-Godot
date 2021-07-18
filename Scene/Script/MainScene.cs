@@ -129,7 +129,7 @@ public class MainScene : Node2D
         ProcessingSorting("Sorting...", true);
 
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
-            SortingAlgorithm.BubbleSort(currentArrayValue, arraySize, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
+            SortingAlgorithm.BubbleSort(currentArrayValue, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
 
         }
 

@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 public class SortingAlgorithm
 {
-    public static async Task BubbleSort(int []arr, int arraySize, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
+    public static async Task BubbleSort(int []arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
         await Task.Run(()=>{
-            int f = 0; // If finish or Sorted
-
             int n = arr.Length; // Array Length
 
             for (int i = 0; i < n - 1; i++){
@@ -56,9 +54,10 @@ public class SortingAlgorithm
 
                         // Set the Sorted Color
                         arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = sortedColor;
-                        f++;
 
-                        if(f == arraySize - 1){
+                    }
+
+                    if(i == n - 2){
                             // GD.Print("Success Sorted: " + arr[j]);
 
                             // Set the Sorted Color
@@ -70,8 +69,6 @@ public class SortingAlgorithm
                             // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
                             MainScene.ProcessingSorting("Sorted", true);
                         }
-
-                    }
                 }
 
             }
