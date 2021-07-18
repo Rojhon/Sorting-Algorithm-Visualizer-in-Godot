@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 public class SortingAlgorithm
 {
+    // Bubble Sort
     public static async Task BubbleSort(int []arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
         await Task.Run(()=>{
             int n = arr.Length; // Array Length
@@ -30,7 +31,7 @@ public class SortingAlgorithm
 
                         Task.Delay(MainScene.sortingSpeed).Wait();
 
-                        // Swap Global Position
+                        // Set the Global Position
                         Vector2 tempGlobalPosition = arrayValueParent.GetChild<Sprite>(j).GlobalPosition;
                         arrayValueParent.GetChild<Sprite>(j).GlobalPosition = arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition;
                         arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition = tempGlobalPosition;
@@ -64,7 +65,7 @@ public class SortingAlgorithm
                             arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
 
                             // For Debugging
-                            ArrayValueGenerator.PrintArrayValueSorted("Bubble Sort"); 
+                            ArrayValueGenerator.PrintArrayValueSorted("Bubble Sort: "); 
 
                             // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
                             MainScene.ProcessingSorting("Sorted", true);
@@ -75,5 +76,75 @@ public class SortingAlgorithm
         }
         );
             
+    }
+
+    // Insertion Sort
+    public static async Task InsertionSort(int[] arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
+        await Task.Run(()=>{
+            int n = arr.Length;
+            for (int i = 1; i < n; ++i) {
+                int key = arr[i];
+                int j = i - 1;
+                
+                // Set the Sorted Color
+                arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+                GD.Print("Sorted: " + arr[j]);
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+                
+                // GD.Print(arr[j] + " Comparing " + key);
+
+                // Set the Comparing Color
+                arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = comparingColor;
+                arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).Modulate = comparingColor;
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+
+                while (j >= 0 && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j = j - 1;
+
+                    // Set the Swapping Color
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = swappingColor;
+                    arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).Modulate = swappingColor;
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    // Set the Global Position
+                    Vector2 tempGlobalPosition = arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition;
+                    // GD.Print(arr[j + 1] + " Swapping " + arr[j + 2]);
+
+                    arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition = arrayValueParent.GetChild<Sprite>(j + 2).GlobalPosition;
+                    arrayValueParent.GetChild<Sprite>(j + 2).GlobalPosition = tempGlobalPosition;
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    // Set the Sorted Color
+                    arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).Modulate = sortedColor;
+
+                    // Change the Index Position in Parent
+                    arrayValueParent.MoveChild(arrayValueParent.GetChild(j + 2), j + 1);
+
+                    // Set the Sorted Color
+                    
+                    arrayValueParent.GetChild<Sprite>(j + 2).GetChild<Sprite>(0).Modulate = sortedColor;
+
+                    
+                }
+                arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).Modulate = sortedColor;
+                arr[j + 1] = key;
+
+                if(i == n - 1){
+                    // For Debugging
+                    ArrayValueGenerator.PrintArrayValueSorted("Insertion Sort: ");
+
+                    // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
+                            MainScene.ProcessingSorting("Sorted", true);
+
+                }
+            }
+        }
+        );
+        
     }
 }

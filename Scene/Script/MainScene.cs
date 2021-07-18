@@ -69,7 +69,7 @@ public class MainScene : Node2D
     // Adding Choices "Type of Sorting Algorithm" in sortinAlgoOption button and Set the index of current sortAlgoOption in option button when selected
     public void AddItem(){
         sortingAlgoOption.AddItem("Bubble Sort");
-        sortingAlgoOption.AddItem("Merge Sort");
+        sortingAlgoOption.AddItem("Insertion Sort");
 
     }
 
@@ -133,8 +133,8 @@ public class MainScene : Node2D
 
         }
 
-        else if(sortingAlgoOption.GetItemText(index) == "Merge Sort"){
-            GD.Print("Merge Sort");
+        else if(sortingAlgoOption.GetItemText(index) == "Insertion Sort"){
+            SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
         }
 
     }
