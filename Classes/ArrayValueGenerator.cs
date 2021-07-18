@@ -3,9 +3,10 @@ using System;
 
 public class ArrayValueGenerator
 {
-    public int[] value;
+    public static int[] value;
+
     // Return a Set of Random Integer Value in Array
-    public int[] RandomArrayValue(int arraySize, int from, int to){
+    public static int[] RandomArrayValue(int arraySize, int from, int to){
         value = new int[arraySize];
 
         int randomValue;
@@ -21,11 +22,22 @@ public class ArrayValueGenerator
     }
 
     // For Debugging
-    public void PrintArrayValue(){
-        GD.Print("Array: " + string.Join(",", value));
+    public static void PrintArrayValue(){
+        GD.Print("Array: " + string.Join(",", GetArrayValues()));
     }
 
-    public int GetLength(){
+    // Display when sorted
+    public static void PrintArrayValueSorted(string algoName){
+        GD.Print(algoName + ": " + string.Join(",", GetArrayValues()));
+    }
+
+    // Return Array Values
+    public static int[] GetArrayValues(){
+        return value;
+    }
+
+    // Return the Length of array
+    public static int GetLength(){
         return value.Length;
     }
 
