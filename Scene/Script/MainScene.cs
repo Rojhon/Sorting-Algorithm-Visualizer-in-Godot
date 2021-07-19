@@ -23,6 +23,9 @@ public class MainScene : Node2D
     // Sort Button
     public static Button sortButton;
 
+    // Pause CheckBox
+    public CheckBox pauseCheckBox;
+
     // Variables for Respawn Object
     public PackedScene arrayValue; // PackedScene of ArrayValue Node
     public Node arrayValueParent; // Storing here the ArrayValue Node
@@ -35,16 +38,19 @@ public class MainScene : Node2D
     public override void _Ready(){
         // Adding item choices of Sorting Algorithm option button
         sortingAlgoOption = this.GetNode<OptionButton>("Control/SortingALgoOption");
+        sortingAlgoOption.FocusMode = Control.FocusModeEnum.None;
         AddItem(); 
 
         // Adding item choices of Array Size Option and Set the array size
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
+        arraySizeOption.FocusMode = Control.FocusModeEnum.None;
         AddSize();
         arraySize = arraySizeOption.GetItemText(arraySizeOption.Selected).ToInt();
         
 
         // Adding item choices in Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
+        sortingSpeedOption.FocusMode = Control.FocusModeEnum.None;
         AddSortingSpeed();
         GD.Print("Sorting Speed: " + sortingSpeed);
 
@@ -54,6 +60,10 @@ public class MainScene : Node2D
 
         // Sort button
         sortButton = GetNode<Button>("Control/Sort");
+
+        // Pause CheckBox
+        pauseCheckBox = this.GetNode<CheckBox>("Control/PauseCheckBox");
+        pauseCheckBox.FocusMode = Control.FocusModeEnum.None;
 
         // Get the node Timer in the scene
         timer = GetNode<Timer>("Timer"); 
