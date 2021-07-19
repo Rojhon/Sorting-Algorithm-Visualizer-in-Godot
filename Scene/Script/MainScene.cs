@@ -31,10 +31,6 @@ public class MainScene : Node2D
     public Timer timer; 
 
     // Color
-    public Color defaulColor = new Color( 1, 1, 1, 1 );
-    public Color sortedColor = new Color(0, 1, 0, 1);
-    public Color comparingColor = new Color( 0, 0, 1, 1 ) ;
-    public Color swappingColor = new Color( 1, 0, 0, 1 );
 
     public override void _Ready(){
         // Adding item choices of Sorting Algorithm option button
@@ -129,12 +125,12 @@ public class MainScene : Node2D
         ProcessingSorting("Sorting...", true);
 
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
-            SortingAlgorithm.BubbleSort(currentArrayValue, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
+            SortingAlgorithm.BubbleSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
 
         }
 
         else if(sortingAlgoOption.GetItemText(index) == "Insertion Sort"){
-            SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, defaulColor, sortedColor, comparingColor, swappingColor);
+            SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
         }
 
     }
