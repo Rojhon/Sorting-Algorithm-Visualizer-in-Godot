@@ -197,7 +197,7 @@ public class MainScene : Node2D
     public void InstanceNode(PackedScene node, Vector2 location, Node parent, int size, int gap){
         if(arrayValueParent.GetChildCount() == 0){
             for(int i = 0; i < size; i++){
-                Global.InstanceNode(node, location, parent);
+                Instance.InstanceNode(node, location, parent);
                 location.x += gap;
 
             }

@@ -86,8 +86,11 @@ public class SortingAlgorithm
                 int key = arr[i];
                 int j = i - 1;
                 
-                // Set the Sorted Color
-                // arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).Modulate = sortedColor;
+                // Set First Sorted Color
+                if(j == 0){
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = sortedColor;
+                }
+                
                 // GD.Print("Sorted: " + arr[j]);
 
                 Task.Delay(MainScene.sortingSpeed).Wait();
@@ -101,8 +104,10 @@ public class SortingAlgorithm
                 Task.Delay(MainScene.sortingSpeed).Wait();
 
                 while (j >= 0 && arr[j] > key) {
+                    GD.Print(arr[j] + " Swaped " + arr[j + 1]);
                     arr[j + 1] = arr[j];
                     j = j - 1;
+                    
 
                     // Set the Swapping Color
                     // arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = swappingColor;
@@ -122,29 +127,25 @@ public class SortingAlgorithm
                     // Set the Default Color
                     // arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).Modulate = defaulColor;
                     
-                     GD.Print(arr[j + 1] + " Swaped " + arr[j + 2]);
+                     
 
                     // Change the Index Position in Parent
                     arrayValueParent.MoveChild(arrayValueParent.GetChild(j + 2), j + 1);
 
-                   
-
                     // Set the Sorted Color
                     
                     // arrayValueParent.GetChild<Sprite>(j + 2).GetChild<Sprite>(0).Modulate = sortedColor;
+                }
 
-                    
-                }
+                // Current Sorted Color
                 if(arrayValueParent.GetChild<Sprite>(j + 1).Name.ToInt() == arr[j + 1]){
-                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).Modulate = sortedColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = sortedColor;
+                    GD.Print("Sorted: " + arr[j + 1]);
                 }
-                
-                GD.Print("Sorted: " + arrayValueParent.GetChild<Sprite>(j + 1).Name);
-                GD.Print("Sorted: " + arr[j + 1]);
+
                 arr[j + 1] = key;
                 
-                GD.Print("Finish Loop: " + arr[j + 1]);
-
+                // Sorting Finish
                 if(i == n - 1){
                     // For Debugging
                     ArrayValueGenerator.PrintArrayValueSorted("Insertion Sort: ");
