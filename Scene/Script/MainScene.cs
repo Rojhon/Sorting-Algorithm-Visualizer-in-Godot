@@ -24,7 +24,7 @@ public class MainScene : Node2D
     public static Button sortButton;
 
     // Pause CheckBox
-    public CheckBox pauseCheckBox;
+    public CheckBox pauseSystem;
 
     // Variables for Respawn Object
     public PackedScene arrayValue; // PackedScene of ArrayValue Node
@@ -62,8 +62,8 @@ public class MainScene : Node2D
         sortButton = GetNode<Button>("Control/Sort");
 
         // Pause CheckBox
-        pauseCheckBox = this.GetNode<CheckBox>("Control/PauseCheckBox");
-        pauseCheckBox.FocusMode = Control.FocusModeEnum.None;
+        pauseSystem = this.GetNode<CheckBox>("Control/PauseSystem");
+        pauseSystem.FocusMode = Control.FocusModeEnum.None;
 
         // Get the node Timer in the scene
         timer = GetNode<Timer>("Timer"); 
@@ -132,6 +132,7 @@ public class MainScene : Node2D
 
     // Sort the current stored array value when pressed
     public void _on_Sort_pressed(){
+        GD.Print("Sorting...");
         ProcessingSorting("Sorting...", true, Control.CursorShape.Forbidden);
 
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
@@ -156,10 +157,10 @@ public class MainScene : Node2D
         sortButton.Text = text;
 
         sortButton.Disabled = disabled;
-        sortingAlgoOption.Disabled = disabled;
+        // sortingAlgoOption.Disabled = disabled;
 
         sortButton.MouseDefaultCursorShape = cursor;
-        sortingAlgoOption.MouseDefaultCursorShape = cursor;
+        // sortingAlgoOption.MouseDefaultCursorShape = cursor;
     }
 
     // Set Respawn Point - This is Fix position 
