@@ -90,7 +90,7 @@ public class MainScene : Node2D
     }
 
     public void _on_ArraySizeOption_item_selected(int index){
-        ProcessingSorting("Sort", false);
+        ProcessingSorting("Sort", false, Control.CursorShape.PointingHand);
         DeleteInstanceNode();
         timer.Start();
     }
@@ -115,14 +115,14 @@ public class MainScene : Node2D
 
     // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
     public void _on_GenerateNewArray_pressed(){
-        ProcessingSorting("Sort", false);
+        ProcessingSorting("Sort", false, Control.CursorShape.PointingHand);
         DeleteInstanceNode();
         timer.Start();
     }
 
     // Sort the current stored array value when pressed
     public void _on_Sort_pressed(){
-        ProcessingSorting("Sorting...", true);
+        ProcessingSorting("Sorting...", true, Control.CursorShape.Forbidden);
 
         if(sortingAlgoOption.GetItemText(index) == "Bubble Sort"){
             SortingAlgorithm.BubbleSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
@@ -142,10 +142,14 @@ public class MainScene : Node2D
     }
 
     // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
-    public static void ProcessingSorting(string text, bool disabled){
+    public static void ProcessingSorting(string text, bool disabled, Control.CursorShape cursor){
         sortButton.Text = text;
+
         sortButton.Disabled = disabled;
         sortingAlgoOption.Disabled = disabled;
+
+        sortButton.MouseDefaultCursorShape = cursor;
+        sortingAlgoOption.MouseDefaultCursorShape = cursor;
     }
 
     // Set Respawn Point - This is Fix position 

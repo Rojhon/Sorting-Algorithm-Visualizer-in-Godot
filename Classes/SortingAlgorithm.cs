@@ -68,7 +68,7 @@ public class SortingAlgorithm
                             ArrayValueGenerator.PrintArrayValueSorted("Bubble Sort: "); 
 
                             // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
-                            MainScene.ProcessingSorting("Sorted", true);
+                            MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
                         }
                 }
 
