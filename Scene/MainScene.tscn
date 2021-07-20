@@ -176,11 +176,11 @@ __meta__ = {
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="item_selected" from="Control/SortingALgoOption" to="." method="_on_SortingALgoOption_item_selected"]
-[connection signal="item_selected" from="Control/ArraySizeOption" to="." method="_on_ArraySizeOption_item_selected"]
 [connection signal="item_selected" from="Control/ArraySizeOption" to="Control" method="_on_ArraySizeOption_item_selected"]
+[connection signal="item_selected" from="Control/ArraySizeOption" to="." method="_on_ArraySizeOption_item_selected"]
 [connection signal="item_selected" from="Control/SortingSpeedOption" to="." method="_on_SortingSpeedOption_item_selected"]
-[connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="Control" method="_on_GenerateNewArray_pressed"]
+[connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
 [connection signal="mouse_entered" from="Control/Sort" to="Control" method="_on_Sort_mouse_entered"]
 [connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
 [connection signal="pressed" from="Control/PauseSystem" to="Control/PauseSystem" method="_on_PauseSystem_pressed"]
