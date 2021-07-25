@@ -167,7 +167,8 @@ public class MainScene : Node2D
 
         else if(sortingAlgoOption.GetItemText(index) == "Insertion Sort")
         {
-            SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
+            SortingAlgorithm.InsertionSort(currentArrayValue);
+            // SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
         }
 
     }
@@ -184,12 +185,8 @@ public class MainScene : Node2D
     public static void ProcessingSorting(string text, bool disabled, Control.CursorShape cursor)
     {
         sortButton.Text = text;
-
         sortButton.Disabled = disabled;
-        // sortingAlgoOption.Disabled = disabled;
-
         sortButton.MouseDefaultCursorShape = cursor;
-        // sortingAlgoOption.MouseDefaultCursorShape = cursor;
     }
 
     // Set Respawn Point - This is Fix position 
