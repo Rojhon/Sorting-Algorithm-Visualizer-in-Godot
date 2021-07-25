@@ -5,7 +5,6 @@ public class MainScene : Node2D
 {
     // Choices for types of sortingAlgoOption and it's index in the Option button
     public static OptionButton sortingAlgoOption;
-    public int index = 0;
 
     // Choices for arraySize of arraySizeOption, and Storage of current array that generated
     public OptionButton arraySizeOption;
@@ -19,6 +18,7 @@ public class MainScene : Node2D
     // Sorting Speed Option ans it's speed value in Millisecond
     public OptionButton sortingSpeedOption;
     public static int sortingSpeed = 1;
+    float sortingSpeedChoices;
 
     // Sort Button
     public static Button sortButton;
@@ -30,26 +30,32 @@ public class MainScene : Node2D
     // The timer for sorting
     public Timer timer; 
 
-    // Color
 
     public override void _Ready()
     {
+        Data.LoadGame();
+
         // Adding item choices of Sorting Algorithm option button
         sortingAlgoOption = this.GetNode<OptionButton>("Control/SortingALgoOption");
         sortingAlgoOption.FocusMode = Control.FocusModeEnum.None;
         AddItem(); 
+        sortingAlgoOption.Select(Data.data[0]); // Set the active save Option
 
         // Adding item choices of Array Size Option and Set the array size
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
         arraySizeOption.FocusMode = Control.FocusModeEnum.None;
         AddSize();
+        arraySizeOption.Select(Data.data[1]); // Set the active save Option
         arraySize = arraySizeOption.GetItemText(arraySizeOption.Selected).ToInt();
-        
 
         // Adding item choices in Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
         sortingSpeedOption.FocusMode = Control.FocusModeEnum.None;
         AddSortingSpeed();
+        sortingSpeedOption.Select(Data.data[2]); // Set the active save Option
+        sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
+        sortingSpeed = (int)sortingSpeedChoices;
+
 
         // Instance the Array Value Scene and Get the node ArrayValueParent in the scene
         arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); 
@@ -64,7 +70,10 @@ public class MainScene : Node2D
         // Set the first array values
         SetArrayValue();
 
+        // Print Values in Console for debugging
         Debug();
+
+        
     }
 
 // For Debugging
@@ -83,7 +92,7 @@ public class MainScene : Node2D
         GD.Print($"Active Algorithm: {sortingAlgoOption.Text}");
         ArrayValueGenerator.PrintArrayValue();
         GD.Print($"Array Length: {ArrayValueGenerator.GetLength()}");
-        GD.Print($"Sorting Speed: {sortingSpeedOption.Text.ToFloat() * 1000} ms -> {sortingSpeedOption.Text.ToString()} sec");
+        GD.Print($"Sorting Speed: {sortingSpeed} ms -> {(float)sortingSpeed/1000} sec");
         GD.Print("");
     }
 
@@ -97,9 +106,10 @@ public class MainScene : Node2D
 
     public void _on_SortingALgoOption_item_selected(int index)
     {
+        Data.data[0] = index;
+        Data.SaveGame();
+
         Debug();
-        this.index = index;
-        
     }
 
     // Adding Choices "Array size" in arraySizeOption button, Set the array size, Display the new Array Value, and Deleting the old Array Value
@@ -121,6 +131,9 @@ public class MainScene : Node2D
 
     public void _on_ArraySizeOption_item_selected(int index)
     {
+        Data.data[1] = index;
+        Data.SaveGame();
+
         ProcessingSorting("Sort", false, Control.CursorShape.PointingHand);
         DeleteInstanceNode();
         timer.Start();
@@ -140,9 +153,13 @@ public class MainScene : Node2D
 
     public void _on_SortingSpeedOption_item_selected(int index)
     {
-        Debug();
-        float sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
+        sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
+
+        Data.data[2] = index;
+        Data.SaveGame();
+
+        Debug();
     }
 
     // Generate a new Random Integer Value in Array and Deleting the old Array value when Pressed
@@ -159,13 +176,13 @@ public class MainScene : Node2D
         GD.Print("Sorting...");
         ProcessingSorting("Sorting...", true, Control.CursorShape.Forbidden);
 
-        if(sortingAlgoOption.GetItemText(index) == "Bubble Sort")
+        if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Bubble Sort")
         {
             SortingAlgorithm.BubbleSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
 
         }
 
-        else if(sortingAlgoOption.GetItemText(index) == "Insertion Sort")
+        else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Insertion Sort")
         {
             SortingAlgorithm.InsertionSort(currentArrayValue);
             // SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);

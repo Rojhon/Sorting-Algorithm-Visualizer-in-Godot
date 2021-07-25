@@ -3,15 +3,11 @@ using System;
 
 public class Data
 {
-    public static String sortingAlgorithm;
-    public static int arraySize;
-    public static float sortingSpeed;
-
-    public static object[] data = {sortingAlgorithm, arraySize, sortingSpeed};
+    public static int[] data = {0, 0, 0};
     
-    public static Godot.Collections.Dictionary<string, object> Save()
+    public static Godot.Collections.Dictionary<string, int[]> Save()
     {
-        return new Godot.Collections.Dictionary<string, object>()
+        return new Godot.Collections.Dictionary<string, int[]>()
         {
             {
                  "data", data
@@ -38,9 +34,9 @@ public class Data
 
         saveGame.Open("user://savegame.save", File.ModeFlags.Read);
 
-        var currentLine = new Godot.Collections.Dictionary<string, object>((Godot.Collections.Dictionary)JSON.Parse(saveGame.GetLine()).Result);
+        var currentLine = new Godot.Collections.Dictionary<string, int[]>((Godot.Collections.Dictionary)JSON.Parse(saveGame.GetLine()).Result);
 
-        data[0] = currentLine["data"];
+        data = currentLine["data"];
         saveGame.Close();
     }
 
