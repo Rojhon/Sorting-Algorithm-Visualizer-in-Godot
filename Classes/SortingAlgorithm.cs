@@ -5,12 +5,16 @@ using System.Threading.Tasks;
 public class SortingAlgorithm
 {
     // Bubble Sort
-    public static async Task BubbleSort(int []arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
-        await Task.Run(()=>{
+    public static async Task BubbleSort(int []arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor)
+    {
+        await Task.Run(()=>
+        {
             int n = arr.Length; // Array Length
 
-            for (int i = 0; i < n - 1; i++){
-                for (int j = 0; j < n - i - 1; j++){
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
 
                     // Set the Comparing Color
                     arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
@@ -19,7 +23,8 @@ public class SortingAlgorithm
                     // GD.Print(arr[j] + " Comparing " + arr[j + 1]);
                     Task.Delay(MainScene.sortingSpeed).Wait();
 
-                    if (arr[j] > arr[j + 1]){
+                    if (arr[j] > arr[j + 1])
+                    {
                         // Swapping the array value
                         int temp = arr[j];
                         arr[j] = arr[j + 1];
@@ -50,7 +55,8 @@ public class SortingAlgorithm
 
                     // Task.Delay(MainScene.sortingSpeed).Wait();
 
-                    if(j == n - i - 2){
+                    if(j == n - i - 2)
+                    {
                         // GD.Print("Success Sorted: " + arr[j + 1]);
 
                         // Set the Sorted Color
@@ -58,7 +64,8 @@ public class SortingAlgorithm
 
                     }
 
-                    if(i == n - 2){
+                    if(i == n - 2)
+                    {
                             // GD.Print("Success Sorted: " + arr[j]);
 
                             // Set the Sorted Color
@@ -69,7 +76,7 @@ public class SortingAlgorithm
 
                             // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
                             MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
-                        }
+                    }
                 }
 
             }

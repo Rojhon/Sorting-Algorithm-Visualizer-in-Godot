@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scene/Script/MainScene.cs" type="Script" id=1]
 [ext_resource path="res://Scene/ArrayValueParent.tscn" type="PackedScene" id=2]
@@ -11,15 +11,12 @@
 [ext_resource path="res://Design/Button/DisableBtn.tres" type="StyleBox" id=9]
 [ext_resource path="res://Design/Nav/NormalNav.tres" type="StyleBox" id=11]
 [ext_resource path="res://Design/Nav/PressedNav.tres" type="StyleBox" id=12]
-[ext_resource path="res://Scene/Script/PauseSystem.cs" type="Script" id=13]
 [ext_resource path="res://Scene/Script/Control.cs" type="Script" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
 use_mipmaps = true
 font_data = ExtResource( 6 )
-
-[sub_resource type="StyleBoxFlat" id=2]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -159,28 +156,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PauseSystem" type="CheckBox" parent="Control"]
-margin_left = 510.0
-margin_top = 23.0
-margin_right = 576.0
-margin_bottom = 47.0
-mouse_default_cursor_shape = 2
-custom_styles/normal = SubResource( 2 )
-text = "Pause"
-flat = true
-align = 1
-script = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="item_selected" from="Control/SortingALgoOption" to="." method="_on_SortingALgoOption_item_selected"]
-[connection signal="item_selected" from="Control/ArraySizeOption" to="Control" method="_on_ArraySizeOption_item_selected"]
 [connection signal="item_selected" from="Control/ArraySizeOption" to="." method="_on_ArraySizeOption_item_selected"]
 [connection signal="item_selected" from="Control/SortingSpeedOption" to="." method="_on_SortingSpeedOption_item_selected"]
-[connection signal="pressed" from="Control/GenerateNewArray" to="Control" method="_on_GenerateNewArray_pressed"]
 [connection signal="pressed" from="Control/GenerateNewArray" to="." method="_on_GenerateNewArray_pressed"]
-[connection signal="mouse_entered" from="Control/Sort" to="Control" method="_on_Sort_mouse_entered"]
 [connection signal="pressed" from="Control/Sort" to="." method="_on_Sort_pressed"]
-[connection signal="pressed" from="Control/PauseSystem" to="Control/PauseSystem" method="_on_PauseSystem_pressed"]
