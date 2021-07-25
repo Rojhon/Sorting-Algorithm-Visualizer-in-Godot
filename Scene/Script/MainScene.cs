@@ -67,6 +67,7 @@ public class MainScene : Node2D
         Debug();
     }
 
+// For Debugging
     public override void _PhysicsProcess(float delta)
     {
         if(Input.IsActionJustPressed("Debug")){
@@ -82,7 +83,7 @@ public class MainScene : Node2D
         GD.Print($"Active Algorithm: {sortingAlgoOption.Text}");
         ArrayValueGenerator.PrintArrayValue();
         GD.Print($"Array Length: {ArrayValueGenerator.GetLength()}");
-        GD.Print($"Sorting Speed: {sortingSpeed} ms -> {sortingSpeedOption.Text.ToString()} sec");
+        GD.Print($"Sorting Speed: {sortingSpeedOption.Text.ToFloat() * 1000} ms -> {sortingSpeedOption.Text.ToString()} sec");
         GD.Print("");
     }
 
@@ -96,6 +97,7 @@ public class MainScene : Node2D
 
     public void _on_SortingALgoOption_item_selected(int index)
     {
+        Debug();
         this.index = index;
         
     }
@@ -138,6 +140,7 @@ public class MainScene : Node2D
 
     public void _on_SortingSpeedOption_item_selected(int index)
     {
+        Debug();
         float sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
     }
