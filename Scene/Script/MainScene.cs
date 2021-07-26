@@ -30,7 +30,6 @@ public class MainScene : Node2D
     // The timer for sorting
     public Timer timer; 
 
-
     public override void _Ready()
     {
         Data.LoadGame();
@@ -39,20 +38,20 @@ public class MainScene : Node2D
         sortingAlgoOption = this.GetNode<OptionButton>("Control/SortingALgoOption");
         sortingAlgoOption.FocusMode = Control.FocusModeEnum.None;
         AddItem(); 
-        sortingAlgoOption.Select(Data.data[0]); // Set the active save Option
+        sortingAlgoOption.Select(Data.data[0]); // Set the active save Option in SortingAlgoOption
 
         // Adding item choices of Array Size Option and Set the array size
         arraySizeOption = this.GetNode<OptionButton>("Control/ArraySizeOption");
         arraySizeOption.FocusMode = Control.FocusModeEnum.None;
         AddSize();
-        arraySizeOption.Select(Data.data[1]); // Set the active save Option
+        arraySizeOption.Select(Data.data[1]); // Set the active save Option Array SIze
         arraySize = arraySizeOption.GetItemText(arraySizeOption.Selected).ToInt();
 
         // Adding item choices in Sorting Speed Option
         sortingSpeedOption = this.GetNode<OptionButton>("Control/SortingSpeedOption");
         sortingSpeedOption.FocusMode = Control.FocusModeEnum.None;
         AddSortingSpeed();
-        sortingSpeedOption.Select(Data.data[2]); // Set the active save Option
+        sortingSpeedOption.Select(Data.data[2]); // Set the active save Option Sorting Speed
         sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
 
@@ -96,6 +95,14 @@ public class MainScene : Node2D
         GD.Print("");
     }
 
+    // Saving the Data
+    public void SaveData(int dataIndex, int optionData)
+    {
+        Data.data[dataIndex] = optionData;
+        Data.SaveGame();
+
+    }
+
     // Adding Choices "Type of Sorting Algorithm" in sortinAlgoOption button and Set the index of current sortAlgoOption in option button when selected
     public void AddItem()
     {
@@ -106,10 +113,9 @@ public class MainScene : Node2D
 
     public void _on_SortingALgoOption_item_selected(int index)
     {
-        Data.data[0] = index;
-        Data.SaveGame();
-
+        SaveData(0, index);
         Debug();
+
     }
 
     // Adding Choices "Array size" in arraySizeOption button, Set the array size, Display the new Array Value, and Deleting the old Array Value
@@ -131,12 +137,11 @@ public class MainScene : Node2D
 
     public void _on_ArraySizeOption_item_selected(int index)
     {
-        Data.data[1] = index;
-        Data.SaveGame();
-
+        SaveData(1, index);
         ProcessingSorting("Sort", false, Control.CursorShape.PointingHand);
         DeleteInstanceNode();
         timer.Start();
+
     }
 
     // Adding Choices "Sorting Speed" in sortingSpeedOption, and Set the Sorting Speed
@@ -156,9 +161,7 @@ public class MainScene : Node2D
         sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
 
-        Data.data[2] = index;
-        Data.SaveGame();
-
+        SaveData(2, index);
         Debug();
     }
 
@@ -204,6 +207,9 @@ public class MainScene : Node2D
         sortButton.Text = text;
         sortButton.Disabled = disabled;
         sortButton.MouseDefaultCursorShape = cursor;
+
+        sortingAlgoOption.Disabled = disabled;
+        sortingAlgoOption.MouseDefaultCursorShape = cursor;
     }
 
     // Set Respawn Point - This is Fix position 
