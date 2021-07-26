@@ -36,13 +36,10 @@ public class SortingAlgorithm
 
                         Task.Delay(MainScene.sortingSpeed).Wait();
 
-                        // Set the Global Position
-                        Vector2 tempGlobalPosition = arrayValueParent.GetChild<Sprite>(j).GlobalPosition;
-                        arrayValueParent.GetChild<Sprite>(j).GlobalPosition = arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition;
-                        arrayValueParent.GetChild<Sprite>(j + 1).GlobalPosition = tempGlobalPosition;
-                        
-                        // Change the Index Position in Parent
-                        arrayValueParent.MoveChild(arrayValueParent.GetChild(j + 1), j);
+                        // Set Size
+                        Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
+                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale.x, arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale.y);
+                        arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
 
                         // GD.Print(temp + " Swapping " + arr[j]);
                     }
@@ -52,8 +49,6 @@ public class SortingAlgorithm
                     // Set the Default Color
                     arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
                     arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
-
-                    // Task.Delay(MainScene.sortingSpeed).Wait();
 
                     if(j == n - i - 2)
                     {
