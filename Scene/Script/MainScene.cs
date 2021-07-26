@@ -187,7 +187,7 @@ public class MainScene : Node2D
 
         else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Insertion Sort")
         {
-            SortingAlgorithm.InsertionSort(currentArrayValue);
+            SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.swappingColor);
             // SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
         }
 

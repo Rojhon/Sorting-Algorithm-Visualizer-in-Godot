@@ -81,36 +81,69 @@ public class SortingAlgorithm
     }
 
     // Insertion Sort
-
-    public static void InsertionSort(int[] arr)
+    public static async Task InsertionSort(int[] arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color swappingColor)
     {
-        int n = arr.Length;
-        for (int i = 1; i < n; ++i) 
+        await Task.Run(()=>
         {
-            int key = arr[i];
-            int j = i - 1;
- 
-            // Move elements of arr[0..i-1],
-            // that are greater than key,
-            // to one position ahead of
-            // their current position
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
-            }
-            arr[j + 1] = key;
-
-            // Sorting Finish
-            if(i == n - 1)
+            int n = arr.Length;
+            for (int i = 1; i < n; i++) 
             {
-                // For Debugging
-                ArrayValueGenerator.PrintArrayValueSorted("Insertion Sort");
+                int key = arr[i];
+                int j = i - 1;
 
-                // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
-                MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
+                // Set the Color
+                if(i == 1){
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = sortedColor;
+                }
 
+                Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).GlobalScale;
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+    
+                while (j >= 0 && arr[j] > key)
+                {
+                    GD.Print(arr[j + 1] + " Set to " + arr[j]);
+                    // Set the Color
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = swappingColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = swappingColor;
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    arrayValueParent.GetChild<Sprite>(i).Modulate = sortedColor;
+
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
+                    arr[j + 1] = arr[j];
+                    j = j - 1;
+
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
+                }
+                // arrayValueParent.GetChild<Sprite>(i).Modulate = sortedColor;
+                
+                arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+                arr[j + 1] = key;
+
+                
+
+                // Task.Delay(MainScene.sortingSpeed).Wait();
+
+                // Sorting Finish
+                if(i == n - 1)
+                {
+                    for (int f = n - 1; f >= 0; f--)
+                    {
+                        arrayValueParent.GetChild<Sprite>(f).Modulate = sortedColor;
+                        Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    }
+                    // For Debugging
+                    ArrayValueGenerator.PrintArrayValueSorted("Insertion Sort");
+
+                    // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
+                    MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
+
+                }
             }
-        }
+        });
     }
     // public static async Task InsertionSort(int[] arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor, Color swappingColor){
     //     await Task.Run(()=>{
