@@ -38,7 +38,7 @@ public class SortingAlgorithm
 
                         // Set Size
                         Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
-                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = new Vector2(arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale.x, arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale.y);
+                        arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale;
                         arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
 
                         // GD.Print(temp + " Swapping " + arr[j]);
@@ -53,7 +53,6 @@ public class SortingAlgorithm
                     if(j == n - i - 2)
                     {
                         // GD.Print("Success Sorted: " + arr[j + 1]);
-
                         // Set the Sorted Color
                         arrayValueParent.GetChild<Sprite>(j + 1).Modulate = sortedColor;
 
@@ -106,7 +105,7 @@ public class SortingAlgorithm
     
                 while (j >= 0 && arr[j] > key)
                 {
-                    // Set the Color
+                    // Set the swapping color
                     arrayValueParent.GetChild<Sprite>(j).Modulate = swappingColor;
                     arrayValueParent.GetChild<Sprite>(j + 1).Modulate = swappingColor;
 
@@ -118,9 +117,9 @@ public class SortingAlgorithm
 
                     // Set the scale
                     arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
-                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+                    // arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
 
-                    // Set Sorted Color
+                    // Set the Sorted Color
                     if(i < n - 1)
                     {
                         arrayValueParent.GetChild<Sprite>(i).Modulate = sortedColor;
@@ -191,6 +190,7 @@ public class SortingAlgorithm
 
                 if (arr[index] >= arr[index - 1])
                 {
+                    // Set the default color
                     arrayValueParent.GetChild<Sprite>(index).Modulate = defaulColor;
                     arrayValueParent.GetChild<Sprite>(index - 1).Modulate = defaulColor;
                     Task.Delay(MainScene.sortingSpeed).Wait();
@@ -208,9 +208,11 @@ public class SortingAlgorithm
                     arrayValueParent.GetChild<Sprite>(index - 1).Modulate = swappingColor;
                     Task.Delay(MainScene.sortingSpeed).Wait();
 
+                    // Set the scale
                     arrayValueParent.GetChild<Sprite>(index).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(index - 1).GetChild<Sprite>(0).GlobalScale;
                     arrayValueParent.GetChild<Sprite>(index - 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
 
+                    // Set the default color
                     Task.Delay(MainScene.sortingSpeed).Wait();
                     arrayValueParent.GetChild<Sprite>(index).Modulate = defaulColor;
                     arrayValueParent.GetChild<Sprite>(index - 1).Modulate = defaulColor;
@@ -223,6 +225,7 @@ public class SortingAlgorithm
 
             for (int i = 0; i < n; i++)
             {
+                // Set the sorted color
                 arrayValueParent.GetChild<Sprite>(i).Modulate = sortedColor;
                 Task.Delay(MainScene.sortingSpeed).Wait();
             }

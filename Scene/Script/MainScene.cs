@@ -30,6 +30,7 @@ public class MainScene : Node2D
     // The timer for sorting
     public Timer timer; 
 
+    // Sorting
     public static bool sorting = false;
 
     public override void _Ready()
@@ -57,7 +58,6 @@ public class MainScene : Node2D
         sortingSpeedChoices = sortingSpeedOption.Text.ToString().ToFloat() * 1000;
         sortingSpeed = (int)sortingSpeedChoices;
 
-
         // Instance the Array Value Scene and Get the node ArrayValueParent in the scene
         arrayValue = GD.Load<PackedScene>("res://Scene/ArrayValue.tscn"); 
         arrayValueParent = this.GetNode<Node>("ArrayValueParent"); 
@@ -73,11 +73,10 @@ public class MainScene : Node2D
 
         // Print Values in Console for debugging
         Debug();
-
         
     }
 
-// For Debugging
+    // For Debugging
     public override void _PhysicsProcess(float delta)
     {
         if(Input.IsActionJustPressed("Debug")){
@@ -193,10 +192,12 @@ public class MainScene : Node2D
         {
             SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.swappingColor);
             // SortingAlgorithm.InsertionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
+
         }
         else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Gnome Sort")
         {
             SortingAlgorithm.GnomeSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
+
         }
 
     }
@@ -243,7 +244,6 @@ public class MainScene : Node2D
             location.x = 33;
 
         }
-        
         
         return location;
     }
