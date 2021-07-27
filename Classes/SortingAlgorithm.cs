@@ -170,5 +170,82 @@ public class SortingAlgorithm
             }
         });
     }
+
+    // Gnome Sort
+    public static async Task GnomeSort(int[] arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor,Color swappingColor)
+    {
+        await Task.Run(()=>
+        {
+            int n = arr.Length;
+            for (int i = 1; i < n; i++) 
+            {
+                int key = arr[i];
+                int j = i - 1;
+
+                arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
+                arrayValueParent.GetChild<Sprite>(j + 1).Modulate = comparingColor;
+
+                Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).GlobalScale;
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+
+                if(arr[j] < key)
+                {
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                }
+
+                while (j >= 0 && arr[j] > key)
+                {
+                    // Set the Color
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = comparingColor;
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    // Set the Color
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = swappingColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = swappingColor;
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+                    
+                    // Set the default Color
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
+
+                    // Set the scale
+                    arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
+                    arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+                    
+                    arr[j + 1] = arr[j];
+                    j = j - 1;
+
+                    // Task.Delay(MainScene.sortingSpeed).Wait();
+                }
+            
+                arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
+                
+                arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+                arr[j + 1] = key;
+
+                // Sorting Finish
+                if(i == n - 1)
+                {
+                    for (int f = 0; f < n; f++)
+                    {
+                        arrayValueParent.GetChild<Sprite>(f).Modulate = swappingColor;
+                        Task.Delay(MainScene.sortingSpeed).Wait();
+                        arrayValueParent.GetChild<Sprite>(f).Modulate = sortedColor;
+
+                    }
+                    // For Debugging
+                    ArrayValueGenerator.PrintArrayValueSorted("Gnome Sort");
+
+                    // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
+                    MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
+
+                }
+            }
+        });
+    }
    
 }
