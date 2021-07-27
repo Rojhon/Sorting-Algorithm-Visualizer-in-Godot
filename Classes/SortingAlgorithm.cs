@@ -238,7 +238,7 @@ public class SortingAlgorithm
     }
    
    // Selection Sort
-   public static async Task SelectionSort(int []arr)
+   public static async Task SelectionSort(int []arr, Node arrayValueParent, Color defaulColor,Color sortedColor, Color comparingColor,Color swappingColor)
     {
         await Task.Run(()=>
         {
@@ -251,22 +251,53 @@ public class SortingAlgorithm
                 int min_index = i;
                 for (int j = i + 1; j < n; j++)
                 {
+                    // GD.Print(arr[j] + " Comparing " + arr[min_index]);
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
+                    arrayValueParent.GetChild<Sprite>(min_index).Modulate = comparingColor;
+                    Task.Delay(MainScene.sortingSpeed).Wait();
+                    
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+
                     if (arr[j] < arr[min_index])
                     {
+                        arrayValueParent.GetChild<Sprite>(min_index).Modulate = defaulColor;
                         min_index = j;
+                        // GD.Print("Current Min: " + arr[min_index]);
+                        arrayValueParent.GetChild<Sprite>(min_index).Modulate = comparingColor;
                     }
                     
                 }
     
                 // Swap the found minimum element with the first
                 // element
+                // GD.Print(arr[min_index] + " Swapping " + arr[i]);
+
+                arrayValueParent.GetChild<Sprite>(min_index).Modulate = swappingColor;
+                arrayValueParent.GetChild<Sprite>(i).Modulate = swappingColor;
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+
+                Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(min_index).GetChild<Sprite>(0).GlobalScale;
+                arrayValueParent.GetChild<Sprite>(min_index).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).GlobalScale;
+                arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+
+                Task.Delay(MainScene.sortingSpeed).Wait();
+                arrayValueParent.GetChild<Sprite>(min_index).Modulate = defaulColor;
+                arrayValueParent.GetChild<Sprite>(i).Modulate = defaulColor;
+
                 int temp = arr[min_index];
                 arr[min_index] = arr[i];
                 arr[i] = temp;
 
+                Task.Delay(MainScene.sortingSpeed).Wait();
+
+                // GD.Print("Sorted: " + arr[i]);
+                arrayValueParent.GetChild<Sprite>(i).Modulate = sortedColor;
+
                 // Sorting Finish
                 if(i == n - 2)
                 {
+                    arrayValueParent.GetChild<Sprite>(n - 1).Modulate = sortedColor;
                     // For Debugging
                     ArrayValueGenerator.PrintArrayValueSorted("Selection Sort"); 
 

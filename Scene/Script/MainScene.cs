@@ -203,7 +203,7 @@ public class MainScene : Node2D
 
         else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Selection Sort")
         {
-            SortingAlgorithm.SelectionSort(currentArrayValue);
+            SortingAlgorithm.SelectionSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
 
         }
 
