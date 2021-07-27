@@ -32,6 +32,7 @@ public class ArrayValueGenerator
     // Display when sorted
     public static void PrintArrayValueSorted(string algoName)
     {
+        MainScene.sorting = false;
         GD.Print($"{algoName}: {string.Join(",", GetArrayValues())}");
         GD.Print("");
     }

@@ -194,6 +194,8 @@ public class SortingAlgorithm
                     arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
                 }
 
+                GD.Print(arr[j] + " Comparing " + key);
+
                 while (j >= 0 && arr[j] > key)
                 {
                     // Set the Color
@@ -215,11 +217,31 @@ public class SortingAlgorithm
                     // Set the scale
                     arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
                     arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
+
+                    // if(arr[j] < key && j >= 0)
+                    // {
+                    //     arrayValueParent.GetChild<Sprite>(j - 1).Modulate = comparingColor;
+                    //     arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
+                         
+                    //      Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    //      arrayValueParent.GetChild<Sprite>(j - 1).Modulate = defaulColor;
+                    //     arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+
+                    //     Task.Delay(MainScene.sortingSpeed).Wait();
+
+                    // }
+
+                    
                     
                     arr[j + 1] = arr[j];
                     j = j - 1;
 
-                    // Task.Delay(MainScene.sortingSpeed).Wait();
+                    GD.Print(arr[j + 1] + " Comparing " + key);
+
+                    
+
+                    Task.Delay(MainScene.sortingSpeed).Wait();
                 }
             
                 arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;

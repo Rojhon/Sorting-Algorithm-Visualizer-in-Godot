@@ -30,6 +30,8 @@ public class MainScene : Node2D
     // The timer for sorting
     public Timer timer; 
 
+    public static bool sorting = false;
+
     public override void _Ready()
     {
         Data.LoadGame();
@@ -177,6 +179,7 @@ public class MainScene : Node2D
     // Sort the current stored array value when pressed
     public void _on_Sort_pressed()
     {
+        sorting = true;
         GD.Print("Sorting...");
         ProcessingSorting("Sorting...", true, Control.CursorShape.Forbidden);
 
@@ -215,6 +218,7 @@ public class MainScene : Node2D
 
         sortingAlgoOption.Disabled = disabled;
         sortingAlgoOption.MouseDefaultCursorShape = cursor;
+
     }
 
     // Set Respawn Point - This is Fix position 

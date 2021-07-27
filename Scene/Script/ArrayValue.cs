@@ -18,9 +18,7 @@ public class ArrayValue : Sprite
         index = parent.GetChildCount() - 1; // Self index in the parent
         selfValue = ArrayValueGenerator.GetArrayValues()[index]; 
 
-        // Display text value
-        intValue = this.GetNode<Label>("IntValue");
-        intValue.Text = selfValue.ToString();
+        
 
         // Set This Name
         this.Name = selfValue.ToString(); 
@@ -52,6 +50,10 @@ public class ArrayValue : Sprite
             valueSprite.Scale = new Vector2(5, -selfValue * 4);
 
         }
+        
+        // Set text value
+        intValue = this.GetNode<Label>("IntValue");
+        intValue.Text = (-valueSprite.GlobalScale.y / 4).ToString();
 
         // Show Hide the Label
         if(ArrayValueGenerator.GetLength() <= 10)
@@ -63,7 +65,16 @@ public class ArrayValue : Sprite
             intValue.Hide();
         }
 
+    }
 
+    public override void _PhysicsProcess(float delta)
+    {
+        // Display text value
+        if(ArrayValueGenerator.GetLength() <= 10 && MainScene.sorting == true)
+        {
+            intValue.Text = (-valueSprite.GlobalScale.y / 4).ToString();
+        }
+        
     }
 
 }
