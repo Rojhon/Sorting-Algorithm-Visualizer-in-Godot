@@ -110,6 +110,7 @@ public class MainScene : Node2D
         sortingAlgoOption.AddItem("Bubble Sort");
         sortingAlgoOption.AddItem("Insertion Sort");
         sortingAlgoOption.AddItem("Gnome Sort");
+        sortingAlgoOption.AddItem("Selection Sort");
 
     }
 
@@ -197,6 +198,12 @@ public class MainScene : Node2D
         else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Gnome Sort")
         {
             SortingAlgorithm.GnomeSort(currentArrayValue, arrayValueParent, Colors.defaulColor, Colors.sortedColor, Colors.comparingColor, Colors.swappingColor);
+
+        }
+
+        else if(sortingAlgoOption.GetItemText(sortingAlgoOption.Selected) == "Selection Sort")
+        {
+            SortingAlgorithm.SelectionSort(currentArrayValue);
 
         }
 

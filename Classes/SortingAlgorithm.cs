@@ -237,4 +237,45 @@ public class SortingAlgorithm
         });
     }
    
+   // Selection Sort
+   public static async Task SelectionSort(int []arr)
+    {
+        await Task.Run(()=>
+        {
+            int n = arr.Length;
+    
+            // One by one move boundary of unsorted subarray
+            for (int i = 0; i < n - 1; i++)
+            {
+                // Find the minimum element in unsorted array
+                int min_index = i;
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (arr[j] < arr[min_index])
+                    {
+                        min_index = j;
+                    }
+                    
+                }
+    
+                // Swap the found minimum element with the first
+                // element
+                int temp = arr[min_index];
+                arr[min_index] = arr[i];
+                arr[i] = temp;
+
+                // Sorting Finish
+                if(i == n - 2)
+                {
+                    // For Debugging
+                    ArrayValueGenerator.PrintArrayValueSorted("Selection Sort"); 
+
+                    // Run when Array Sorting is Processing - Set the text of sortButton, Disable the sortButton, sortingAlgoOption
+                    MainScene.ProcessingSorting("Sorted", true, Control.CursorShape.Forbidden);
+                }
+            }
+	
+        });
+        
+    }
 }
