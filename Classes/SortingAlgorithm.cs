@@ -182,10 +182,12 @@ public class SortingAlgorithm
                 int key = arr[i];
                 int j = i - 1;
 
-                arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
-                arrayValueParent.GetChild<Sprite>(j + 1).Modulate = comparingColor;
+                arrayValueParent.GetChild<Sprite>(i).Modulate = comparingColor;
+                arrayValueParent.GetChild<Sprite>(i - 1).Modulate = comparingColor;
 
                 Vector2 tempGLobalScale = arrayValueParent.GetChild<Sprite>(i).GetChild<Sprite>(0).GlobalScale;
+
+                GD.Print(arr[j] + " Comparing " + key);
 
                 Task.Delay(MainScene.sortingSpeed).Wait();
 
@@ -194,14 +196,8 @@ public class SortingAlgorithm
                     arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
                 }
 
-                GD.Print(arr[j] + " Comparing " + key);
-
                 while (j >= 0 && arr[j] > key)
                 {
-                    // Set the Color
-                    arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
-                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = comparingColor;
-
                     Task.Delay(MainScene.sortingSpeed).Wait();
 
                     // Set the Color
@@ -211,43 +207,50 @@ public class SortingAlgorithm
                     Task.Delay(MainScene.sortingSpeed).Wait();
                     
                     // Set the default Color
-                    arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
-                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
+                    // arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                    // arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
 
                     // Set the scale
                     arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale;
                     arrayValueParent.GetChild<Sprite>(j).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
 
-                    // if(arr[j] < key && j >= 0)
-                    // {
-                    //     arrayValueParent.GetChild<Sprite>(j - 1).Modulate = comparingColor;
-                    //     arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
-                         
-                    //      Task.Delay(MainScene.sortingSpeed).Wait();
+                     Task.Delay(MainScene.sortingSpeed).Wait();
 
-                    //      arrayValueParent.GetChild<Sprite>(j - 1).Modulate = defaulColor;
-                    //     arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
-
-                    //     Task.Delay(MainScene.sortingSpeed).Wait();
-
-                    // }
-
-                    
-                    
                     arr[j + 1] = arr[j];
+                    arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                    arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
                     j = j - 1;
 
-                    GD.Print(arr[j + 1] + " Comparing " + key);
+                    if(j != - 1){
+                        GD.Print(arr[j] + " Comparing " + key);
+                        // arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                        // arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
 
+                        // Task.Delay(MainScene.sortingSpeed).Wait();
+                        
+                    }
                     
+                    if(j >= 0){
+                        GD.Print("End: " + arr[j]);
+                        // Task.Delay(MainScene.sortingSpeed).Wait();
+                        arrayValueParent.GetChild<Sprite>(j).Modulate = comparingColor;
+                        arrayValueParent.GetChild<Sprite>(j + 1).Modulate = comparingColor;
+                        
+                    }
 
                     Task.Delay(MainScene.sortingSpeed).Wait();
                 }
+
+                // if(j != -1){
+                //         arrayValueParent.GetChild<Sprite>(j).Modulate = defaulColor;
+                //     }
             
                 arrayValueParent.GetChild<Sprite>(j + 1).Modulate = defaulColor;
                 
                 arrayValueParent.GetChild<Sprite>(j + 1).GetChild<Sprite>(0).GlobalScale = tempGLobalScale;
                 arr[j + 1] = key;
+
+                 
 
                 // Sorting Finish
                 if(i == n - 1)

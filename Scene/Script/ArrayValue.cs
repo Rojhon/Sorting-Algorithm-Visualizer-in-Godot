@@ -70,6 +70,7 @@ public class ArrayValue : Sprite
     public override void _PhysicsProcess(float delta)
     {
         // Display text value
+        // This is not optimize because is calling evertime
         if(ArrayValueGenerator.GetLength() <= 10 && MainScene.sorting == true)
         {
             intValue.Text = (-valueSprite.GlobalScale.y / 4).ToString();
