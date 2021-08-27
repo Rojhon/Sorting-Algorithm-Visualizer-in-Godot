@@ -18,9 +18,7 @@ public class ArrayValue : Sprite
         index = parent.GetChildCount() - 1; // Self index in the parent
         selfValue = ArrayValueGenerator.GetArrayValues()[index]; 
 
-        // Display text value
-        intValue = this.GetNode<Label>("IntValue");
-        intValue.Text = selfValue.ToString();
+        
 
         // Set This Name
         this.Name = selfValue.ToString(); 
@@ -28,35 +26,56 @@ public class ArrayValue : Sprite
         // Value Sprite Node - Set the Scale
         valueSprite = GetNode<Sprite>("ValueSprite");
 
-        if(ArrayValueGenerator.GetLength() == 5 || ArrayValueGenerator.GetLength() == 10){
+        if(ArrayValueGenerator.GetLength() == 5 || ArrayValueGenerator.GetLength() == 10)
+        {
             valueSprite.Scale = new Vector2(valueSprite.Scale.x, -selfValue * 4);
 
-        }else if(ArrayValueGenerator.GetLength() == 25){
+        }else if(ArrayValueGenerator.GetLength() == 25)
+        {
             valueSprite.Scale = new Vector2(30, -selfValue * 4);
 
         }
-        else if(ArrayValueGenerator.GetLength() == 50){
+        else if(ArrayValueGenerator.GetLength() == 50)
+        {
             valueSprite.Scale = new Vector2(15, -selfValue * 4);
 
         }
-        else if(ArrayValueGenerator.GetLength() == 75){
+        else if(ArrayValueGenerator.GetLength() == 75)
+        {
             valueSprite.Scale = new Vector2(10, -selfValue * 4);
 
         }
-        else if(ArrayValueGenerator.GetLength() == 100){
+        else if(ArrayValueGenerator.GetLength() == 100)
+        {
             valueSprite.Scale = new Vector2(5, -selfValue * 4);
 
         }
+        
+        // Set text value
+        intValue = this.GetNode<Label>("IntValue");
+        intValue.Text = (-valueSprite.GlobalScale.y / 4).ToString();
 
         // Show Hide the Label
-        if(ArrayValueGenerator.GetLength() <= 10){
+        if(ArrayValueGenerator.GetLength() <= 10)
+        {
             intValue.Show();
         }
-        else{
+        else
+        {
             intValue.Hide();
         }
 
+    }
 
+    public override void _PhysicsProcess(float delta)
+    {
+        // Display text value
+        // This is not optimize because is calling evertime
+        if(ArrayValueGenerator.GetLength() <= 10 && MainScene.sorting == true)
+        {
+            intValue.Text = (-valueSprite.GlobalScale.y / 4).ToString();
+        }
+        
     }
 
 }
